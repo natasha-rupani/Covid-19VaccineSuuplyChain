@@ -1,14 +1,22 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { clearUserSession } from '../utils/common';
+import { useCookies } from 'react-cookie';
+import Vaccine from './vaccine';
 import '../dashboard.css';
 
 function Dashboard() {
     const history = useHistory();
-
+    const [cookies, setCookie, removeCookie] = useCookies();
+   // console.log(cookies.userType);
+   useEffect(() => {
+       if(!cookies.userJWT || !cookies.address){
+           history.push('/login');
+       }
+   })
     const handleLogout = () => {
-        clearUserSession();
+        removeCookie('userJWT');
+        removeCookie('address');
+        removeCookie('userType');
         history.push('/login');
     }
     return(
@@ -28,10 +36,14 @@ function Dashboard() {
                         <div className="sidebar-sticky">
                             <ul className="nav flex-column">
                                 <li className="nav-item">
-                                    <a className="nav-link active" href="#">
+                                    <a className="nav-link active" href="/dashboard">
                                     <span data-feather="home"></span>
                                     Dashboard <span className="sr-only">(current)</span>
                                     </a>
+                                </li>
+
+                                <li className={cookies.userType==2 ? 'nav-item' : 'd-none'}>
+                                    <a className="nav-link" href="/dashboard/vaccine">All Vaccines</a>
                                 </li>
                             </ul>
                         </div>
@@ -39,31 +51,9 @@ function Dashboard() {
                     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                             <h1 className="h2">Dashboard</h1>
-                            <h2>Distributers</h2>
                         </div>
                         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                            <div className="table-responsive">
-                                <table className="table table-striped table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Header</th>
-                                            <th>Header</th>
-                                            <th>Header</th>
-                                            <th>Header</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1,001</td>
-                                            <td>Lorem</td>
-                                            <td>ipsum</td>
-                                            <td>dolor</td>
-                                            <td>sit</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            {history.location.pathname == '/dashboard/vaccine' ? <Vaccine /> : ''}
                         </div>
                     </main>
                 </div>

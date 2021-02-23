@@ -1,10 +1,10 @@
-# Perishable Products Logistics
+# Blockchain solution for Covid 19 Vaccine supply chain
 
 Blockchain based solution to track corona vaccine. The project employees ReactJs as frontend, ExpressJs as the middleware and solidity for smart contracts.This project is a final assignment for BCDV1011 Design Patterns for Blockchain as group project.
 
 Below are the steps to install and run the project:
 1. Clone the folder in your local workplace 
-git clone https://github.com/priyaminhas/PerishableProductsLogistics.git
+git clone https://github.com/natasha-rupani/Covid-19VaccineSuuplyChain
 2. Change directory to cloned project
 3. Update the .env file under backend folder to add the MONGODB_URI_DEV, PRIVATE_KEY, BLOCKCHAIN_EMULATOR_URI
 4. Open a separate terminal to migrate the smart contracts
